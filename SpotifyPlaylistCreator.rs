@@ -26,19 +26,6 @@ fn create_playlist(name: &str, genre: &str, mood: &str) {
             "description": format!("A playlist for {} music with a {} mood.", genre, mood),
             "public": true
 
-     /+  let playlist_response = client.post(&format!("https://api.spotify.com/v1/users/{}/playlists", user_id))
-       .headers(headers)
-        .json(&json!({
-            "name": "Happy Rock",
-            "description": "A playlist of happy rock songs",
-            "public": true        }))
-        .send()
-        .unwrap();
-    let playlist_json: Value = serde_json::from_str(&playlist_response.text().unwrap()).unwrap();
-    let playlist_id = &playlist_json["id"].as_str().unwrap();
-
-*/
-
     // Search for songs in the specified genre and mood
     let search_response = client.get(&format!("https://api.spotify.com/v1/search?q=genre:{}+mood:{}&type=track&limit=50", genre, mood))
         .headers(headers)
@@ -56,7 +43,21 @@ fn create_playlist(name: &str, genre: &str, mood: &str) {
         .send()
         .unwrap();
 }
- /* Search for songs in the rock genre and happy sentiment
+            
+    
+     /* // Sets a certain name and description
+     let playlist_response = client.post(&format!("https://api.spotify.com/v1/users/{}/playlists", user_id))
+       .headers(headers)
+        .json(&json!({
+            "name": "Happy Rock",
+            "description": "A playlist of happy rock songs",
+            "public": true        }))
+        .send()
+        .unwrap();
+    let playlist_json: Value = serde_json::from_str(&playlist_response.text().unwrap()).unwrap();
+    let playlist_id = &playlist_json["id"].as_str().unwrap();
+
+  // Search for songs in the rock genre and happy sentiment
     let search_response = client.get("https://api.spotify.com/v1/search?q=genre:rock+mood:happy&type=track&limit=10")
         .headers(headers)
         .send()
